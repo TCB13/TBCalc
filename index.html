@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" manifest="/cache.manifest">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="viewport-fit=cover, user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <title>TBCalc</title>
+
+    <!-- This favicon order ensures modern browsers always pick the SVG -->
+    <link rel="shortcut icon" href="favicons/favicon.ico">
+    <link rel="icon" href="favicons/icon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <!-- Apple Style PWAs (: -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TBCalc">
+    <!--
+        <link rel="icon" sizes="16x16 32x32 64x64" href="favicon.ico">
+        <link rel="icon" type="image/png" sizes="196x196" href="favicons/favicon-192.png">
+        <link rel="icon" type="image/png" sizes="160x160" href="favicons/favicon-160.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96.png">
+        <link rel="icon" type="image/png" sizes="64x64" href="favicons/favicon-64.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16.png">
+        <link rel="apple-touch-icon" href="favicons/favicon-57.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="favicons/favicon-114.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="favicons/favicon-72.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="favicons/favicon-144.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="favicons/favicon-60.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="favicons/favicon-120.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="favicons/favicon-76.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="favicons/favicon-152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="favicons/favicon-180.png">
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+        <meta name="msapplication-TileImage" content="favicons/favicon-144.png">
+        <meta name="msapplication-config" content="browserconfig.xml">
+    -->
+
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="math.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+
+<div class="side-menu border-end position-fixed actions">
+    <div class="logo">
+        <button type="button" class="btn p-3 text-decoration-none border-bottom"
+                id="refresh" style="font-size: 1.5rem;"
+        >
+            <i class="bi bi-calculator-fill"></i>
+        </button>
+        <p class="d-block brand-text">TBCalc</p>
+    </div>
+
+    <div class="actions-bottom text-center">
+        <button type="button" class="btn py-3 border-top"
+                id="save-file"
+                aria-current="page" title="Save to File"
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Save to File"
+        >
+            <i class="bi bi-box-arrow-up"></i>
+        </button>
+
+        <button type="button" class="btn py-3 border-top"
+                id="save-clipboard"
+                aria-current="page" title="Copy to Clipboard"
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Copy to Clipboard"
+        >
+            <i class="bi bi-clipboard2-plus"></i>
+        </button>
+
+        <button type="button" class="btn py-3 border-top"
+                id="reset"
+                aria-current="page" title="Clear"
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Clear"
+        >
+            <i class="bi bi-trash3"></i>
+        </button>
+
+        <button type="button" class="btn py-3 border-top"
+                aria-current="page" title="Help"
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Help"
+                data-bs-toggle="offcanvas" data-bs-target=".help-panel" aria-controls="help-panel"
+        >
+            <i class="bi bi-question-lg"></i>
+        </button>
+
+        <button type="button" class="btn py-3 border-top"
+                id="theme"
+                aria-current="page" title="Got Bugs?"
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Got Bugs?"
+        >
+            <i class="bi bi-lightbulb"></i>
+        </button>
+
+        <button type="button" class="btn py-3 border-top"
+                aria-current="page" title="Settings"
+                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Settings"
+                data-bs-toggle="offcanvas" data-bs-target=".settings-panel" aria-controls="settings-panel"
+        >
+            <i class="bi bi-gear"></i>
+        </button>
+
+    </div>
+</div>
+
+<div class="interface">
+    <div class="output"></div>
+    <textarea class="input" spellcheck="false"></textarea>
+</div>
+
+
+<div class="offcanvas offcanvas-end help-panel" data-bs-scroll="true" data-bs-backdrop="false"
+     tabindex="-1" aria-labelledby="help-panel">
+    <div class="offcanvas-body">
+        <button type="button" class="btn text-reset float-end"
+                data-bs-dismiss="offcanvas" aria-label="Close" style="font-size: 1.5rem;">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <h1>Basic Math</h1>
+        <p class="input">
+            2 + 2 * 2<span class="hint">6</span><br>
+            sqrt(3^2 + 4^2)<span class="hint">5</span><br>
+            2 inch to cm<span class="hint">5.08 cm</span><br>
+            cos(45 deg)<span class="hint">0.7071067812</span><br>
+            round(2.4)<span class="hint">2</span><br>
+            round(2.5)<span class="hint">3</span><br>
+            ceil(2.2)<span class="hint">3</span><br>
+            floor(2.7)<span class="hint">2</span><br>
+            fix(2.4)<span class="hint">2</span><br>
+            3!<span class="hint">6</span><br>
+            log(3)<span class="hint">1.0986122887</span><br>
+            log(3, e)<span class="hint">1.0986122887</span><br>
+            log2(2)<span class="hint">1</span><br>
+            log10(10)<span class="hint">1</span>
+        </p>
+
+        <h1>Variables</h1>
+        <p class="input">a = 25<br>
+            b = a * 2<span class="hint">50</span><br>
+            with spaces = 1122</p>
+
+        <h1>Last result</h1>
+        <p class="input">2 * 2<span class="hint">4</span><br>
+            last + 1<span class="hint">5</span></p>
+
+        <h1>Advanced Functions</h1>
+        <p class="input">
+            random(1, 100)<span class="hint">14.8104136259</span><br>
+            randomInt(1, 100)<span class="hint">78</span><br>
+            abs(-5)<span class="hint">5</span><br>
+            mod(2, 4)<span class="hint">2</span><br>
+            gcd(2, 4, 6)<span class="hint">2</span><br>
+            max(1, 2, 10, 5)<span class="hint">10</span><br>
+            min(20, 10, 5)<span class="hint">5</span><br>
+            mean(2, 3, 4, 6)<span class="hint">3.75</span><br>
+            median(2, 3, 4, 6)<span class="hint">3.5</span><br>
+            std(2, 4, 6)<span class="hint">2</span><br>
+            isPrime(3)<span class="hint">true</span>
+        </p>
+
+        <h1>Comments</h1>
+        <p class="input"># This is a comment<br>
+            2 * 2 # Inline comment<span class="hint">4</span></p>
+
+        <h1>User Functions</h1>
+        <p class="input">myFunc(x) = x ^ 2<br>
+            myFunc(6)<span class="hint">36</span></p>
+
+        <h1>Lists</h1>
+        <p class="input">animals:<span class="hint">6</span><br>
+            &nbsp;&nbsp;cats = 4<br>
+            &nbsp;&nbsp;dogs = 2<br><br>
+            plants:<span class="hint">40</span><br>
+            &nbsp;&nbsp;trees = 20<br>
+            &nbsp;&nbsp;vegetables:<span class="hint">20</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;potatoes = 10<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;carrots = 10</p>
+
+        <h1>Shortcuts</h1>
+        <p class="input">Control + D<span class="hint">Duplicate line</span><br>
+            Up/Down Arrows<span class="hint">Navigation</span><br>
+            Tab<span class="hint">Indent</span><br>
+            Shift + Tab<span class="hint">Unindent</span><br>
+        </p>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end settings-panel" data-bs-scroll="true" data-bs-backdrop="false"
+     tabindex="-1" aria-labelledby="settings-panel">
+    <div class="offcanvas-body">
+        <button type="button" class="btn text-reset float-end"
+                data-bs-dismiss="offcanvas" aria-label="Close" style="font-size: 1.5rem;">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <h1>Settings</h1>
+        <form class="mt-4 settings">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="open_help">
+                <label class="form-check-label" for="open_help">Open the help panel on startup</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="darkmode">
+                <label class="form-check-label" for="darkmode">Prefer dark mode</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="save_history">
+                <label class="form-check-label" for="save_history">Save history across sessions</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="round_results">
+                <label class="form-check-label" for="round_results">Round results to 10 decimal places</label>
+            </div>
+        </form>
+        <div class="border-top my-4 pt-2">
+            <p><small>TBCalc v1.1 - www.tcb13.com<br>
+                Copyright © TCB13 (Tadeu Bento) 2022. <a rel="license" target="_blank" href="/LICENSE.txt">Licensed as GPLv3.</a><br>
+                <a target="_blank" href="/INCLUDED_LICENSES.txt">This project uses open-source libraries.</a>
+            </small></p>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade mobile-warning" data-bs-backdrop="static" tabindex="-1"
+     aria-labelledby="mobile-waring-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold lh-sm" id="mobile-waring-label"><i class="bi bi-calculator-fill"></i>
+                    Welcome to TBCalc<br><span class="fs-6 fw-normal">The best desktop console calculator yet!</span>
+                </h5>
+                <button type="button" class="btn text-reset float-end"
+                        data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
+                    <i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>TBCalc brings the power and usability of a console to everyday math.</p>
+                <p>If you're on a mobile device without a keyboard your experience might be poor. Continue at your own
+                    risk.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">I Understand</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

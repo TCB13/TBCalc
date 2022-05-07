@@ -1,0 +1,15 @@
+{
+  "name": "TBCalc",
+  "short_name": "TBCalc",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "The best desktop console calculator yet!",
+  "icons": [
+      {
+        "src": "favicons/icon.svg",
+        "sizes": "any",
+        "type": "image/svg+xml"
+      }
+  ]
+}

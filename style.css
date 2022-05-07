@@ -1,0 +1,164 @@
+:root {
+    --hint-color: #868585;
+    --highlight-color: #f9f9f9;
+    --app-background: #fff;
+    --app-text-color: #212529;;
+    --border-color: #dee2e6;
+}
+
+.dark-mode {
+    --hint-color: #3993ea;
+    --highlight-color: #202B36;
+    --app-background: #17212B;
+    --app-text-color: #fff;
+    --border-color: #0E1621;
+}
+
+body {
+    background-color: var(--app-background);
+    color: var(--app-text-color);
+    min-height: 100vh;
+}
+
+.side-menu {
+    background-color: var(--highlight-color);
+    border-color: var(--border-color) !important;
+    top: 0;
+    width: 3.5rem;
+    height: 100vh;
+    user-select: none;
+    z-index: 1000;
+}
+
+.actions-bottom {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.actions button {
+	display: block;
+	border-radius: 0;
+	border: none;
+	width: 100%;
+}
+
+p, a, a:link, a:hover, a:active, a:visited, a:focus, 
+.actions button, .actions button:hover, .actions button:active, .actions button:focus {
+    color: var(--app-text-color);
+    outline: 0;
+    box-shadow: none;
+    transition: none;
+}
+
+a, a:link, a:hover, a:active, a:visited, a:focus,
+.offcanvas-footer, .border-top, .border-bottom,
+.modal-header, .modal-footer  {
+    border-color: var(--border-color) !important;
+}
+
+.brand-text {
+    transform: rotate(180deg);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 25px;
+    margin: 0;
+    padding: 0 0.75rem 1rem 0;
+    line-height: 1;
+}
+
+.offcanvas, .modal-content {
+    background-color: var(--app-background);
+}
+
+.offcanvas span.hint {
+    color: var(--hint-color);
+}
+
+.offcanvas span.hint:before {
+    content: " = ";
+    color: var(--hint-color);
+}
+
+.offcanvas h1 {
+    margin-top: 1.5rem;
+}
+
+.interface {
+    position:relative;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    width: auto;
+    margin-left: 3.5rem;
+}
+
+.interface .input, .interface .output, .help-panel .input, .help-panel .output {
+    font-family: 'Consolas', 'Menlo', 'Monaco', courier, monospace;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.interface .input, .interface .output {
+    white-space: pre-wrap;
+    word-break: break-word;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border: none;
+    margin: 0;
+}
+
+.interface .input {
+    overflow: auto;
+    outline: none;
+    background: none;
+    resize: none;
+    padding: 20px;
+    color: var(--app-text-color);
+    caret-color: var(--app-text-color)
+}
+
+.interface .output {
+    padding: 20px 0;
+}
+
+.interface .output div {
+    display: block;
+    padding: 0 20px;
+}
+
+.interface .output div.highlight {
+    background-color: var(--highlight-color);
+}
+
+.interface .output .code {
+    color: var(--hint-color);
+}
+
+.interface .output .code:before {
+    content: attr(data-code);
+    visibility: hidden;
+}
+
+.interface .output .hint:before {
+    content: attr(data-prefix);
+    color: var(--hint-color);
+    white-space: pre;
+}
+
+.interface .output .hint {
+    z-index: 1;
+    position: absolute;
+    white-space: pre;
+}
+
+.interface .output .result, .interface .output .functype {
+    color: var(--hint-color);
+}
+
+.interface .output .error {
+    color: red;
+}

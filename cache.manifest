@@ -1,0 +1,20 @@
+CACHE MANIFEST
+
+# Version 0.0.2
+
+NETWORK: *
+
+CACHE:
+fonts/bootstrap-icons.woff
+fonts/bootstrap-icons.woff2
+bootstrap.min.css
+bootstrap.min.js
+bootstrap-icons.min.css
+main.js
+math.min.js
+popper.min.js
+style.css
+favicons/favicon.ico
+favicons/icon.svg
+
+FALLBACK:
