@@ -22,4 +22,4 @@ TBCalc is developed to be a self-contained web application without external depe
 
 ________
 
-Copyright © TCB13 (Tadeu Bento) 2022. Licensed as GPLv3.
+Copyright © TCB13 (Tadeu Bento) 2022. Licensed under GPLv3.
