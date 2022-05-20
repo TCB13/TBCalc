@@ -1,5 +1,5 @@
 /**
- TBCalc v1.1 - Console Calculator
+ TBCalc v1.2 - Console Calculator
  Copyright (C) 2022 TCB13 (Tadeu Bento)
  https://tbcalc.tcb13.com | https://tcb13.com | https://tadeubento.com
 
@@ -37,6 +37,10 @@ window.onload = () => {
     window.stm = new SettingsManager(settingCheckboxes, settings);
     stm.load();
 
+    document.querySelector("form.settings input#darkmode").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
+
     const input = document.querySelector(".interface .input");
     if (stm.settings.save_history && localStorage.getItem("input")) {
         input.value = localStorage.getItem("input");
@@ -49,13 +53,6 @@ window.onload = () => {
     if (stm.settings.darkmode) {
         document.body.classList.add("dark-mode");
     }
-
-    const themeBtn = document.getElementById("theme");
-    themeBtn.onclick = () => {
-        document.body.classList.toggle("dark-mode");
-        stm.settings.darkmode = !stm.settings.darkmode;
-        stm.store();
-    };
 
     document.getElementById("refresh").onclick = () => location.reload();
     document.getElementById("reset").onclick = () => calc.reset();
@@ -100,12 +97,12 @@ class SettingsManager {
 
         for (const checkbox of this.checkboxEls) {
             checkbox.checked = this.settings[checkbox.id];
-            checkbox.onclick = () => {
+            checkbox.addEventListener("click", () => {
                 for (const checkbox of this.checkboxEls) {
                     this.settings[checkbox.id] = checkbox.checked;
                 }
                 localStorage.setItem("settings", JSON.stringify(this.settings));
-            }
+            });
         }
 
     }

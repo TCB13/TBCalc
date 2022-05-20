@@ -91,14 +91,6 @@
         </button>
 
         <button type="button" class="btn py-3 border-top"
-                id="theme"
-                aria-current="page" title="Got Bugs?"
-                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Got Bugs?"
-        >
-            <i class="bi bi-lightbulb"></i>
-        </button>
-
-        <button type="button" class="btn py-3 border-top"
                 aria-current="page" title="Settings"
                 data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Settings"
                 data-bs-toggle="offcanvas" data-bs-target=".settings-panel" aria-controls="settings-panel"
@@ -201,12 +193,12 @@
         <h1>Settings</h1>
         <form class="mt-4 settings">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="open_help">
-                <label class="form-check-label" for="open_help">Open the help panel on startup</label>
+                <input class="form-check-input" type="checkbox" value="" id="darkmode">
+                <label class="form-check-label" for="darkmode">Enable dark mode</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="darkmode">
-                <label class="form-check-label" for="darkmode">Prefer dark mode</label>
+                <input class="form-check-input" type="checkbox" value="" id="open_help">
+                <label class="form-check-label" for="open_help">Open the help panel on startup</label>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="save_history">
@@ -217,11 +209,13 @@
                 <label class="form-check-label" for="round_results">Round results to 10 decimal places</label>
             </div>
         </form>
-        <div class="border-top my-4 pt-2">
-            <p><small>TBCalc v1.1 - www.tcb13.com<br>
-                Copyright © TCB13 (Tadeu Bento) 2022. <a rel="license" target="_blank" href="/LICENSE.txt">Licensed as GPLv3.</a><br>
-                <a target="_blank" href="/INCLUDED_LICENSES.txt">This project uses open-source libraries.</a>
-            </small></p>
+        <div class="border-top my-4 pt-2 legal">
+            <p>
+                <span>TBCalc v1.2 - www.tcb13.com</span><br>
+                Copyright © TCB13 (Tadeu Bento) 2022.<br>
+                <a rel="license" target="_blank" href="https://tbcalc.tcb13.com/LICENSE.txt">Licensed under GPLv3.</a><br>
+                <a target="_blank" href="https://tbcalc.tcb13.com/INCLUDED_LICENSES.txt">This project uses open-source libraries.</a>
+            </p>
         </div>
     </div>
 </div>

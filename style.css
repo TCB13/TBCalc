@@ -162,3 +162,11 @@ a, a:link, a:hover, a:active, a:visited, a:focus,
 .interface .output .error {
     color: red;
 }
+
+.legal {
+    font-size: 0.8rem;
+}
+
+.legal span {
+    font-weight: bold;
+}
