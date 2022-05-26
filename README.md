@@ -3,7 +3,7 @@ The best desktop console calculator yet!
 
 🌐 Try TBCalc Online: https://tbcalc.tcb13.com
 
-💻 **TBCalc Windows App:** [https://tbcalc.tcb13.com/download/TBCalc-v1-1-0-Setup.zip](https://github.com/TCB13/TBCalc/releases/download/1.2/TBCalc-v1-2-0-Setup.zip)
+💻 **TBCalc Windows App:** https://github.com/TCB13/TBCalc/releases/download/1.2/TBCalc-v1-2-0-Setup.zip
  
 **TBCalc** brings the power and usability of a console to everyday math. Most calculator applications are great, but unfortunately they provide a very poor experience when it comes keyboards. TBCalc fixes that by merging a typical console enviroment with a powerful calculator.
 
