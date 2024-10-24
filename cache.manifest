@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 1.3.0
+# Version 1.4.0
 
 NETWORK: *
 
@@ -17,5 +17,7 @@ style.css
 favicons/favicon.ico
 favicons/icon.svg
 functions/credit.js
+functions/subnet.js
+functions/render-helpers.js
 
 FALLBACK:

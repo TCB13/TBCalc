@@ -1,20 +1,20 @@
-/**
- TBCalc v1.3 - Console Calculator
- Copyright (C) 2022-2024 TCB13 (Tadeu Bento)
- https://tbcalc.tcb13.com | https://tcb13.com | https://tadeubento.com
-
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+/*
+ * TBCalc v1.4 - Console Calculator
+ * Copyright (C) 2022-2024 TCB13 (Tadeu Bento)
+ * https://tbcalc.tcb13.com | https://tcb13.com | https://tadeubento.com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 let settings = {
@@ -29,7 +29,24 @@ math.import({
     TBCalc: "Welcome to TBCalc!",
     clear: () => calc.reset(),
     reset: () => calc.reset(),
-    credit: (...args) => Credit.simulate(...args)
+    credit: (...args) => {
+        const result = Credit.prepareOutput(Credit.simulate(...args));
+        let renderedOutput = "\n";
+        renderedOutput += RenderHelpers.outputArray(result.data, 28);
+        if (result.extraData.length) {
+            renderedOutput += RenderHelpers.outputArray(result.extraData, 33);
+        }
+        renderedOutput += "\n";
+        return renderedOutput;
+    },
+    subnet: (input) => {
+        const result = IPSubnet.calculate(input);
+        const preparedResult = IPSubnet.prepareOutput(result);
+        let renderedOutput = "\n";
+        renderedOutput += RenderHelpers.outputArray(preparedResult, result.type === "ipv4" ? 22 : 28);
+        renderedOutput += "\n";
+        return renderedOutput;
+    }
 });
 
 window.onload = () => {
@@ -114,7 +131,6 @@ class SettingsManager {
     }
 
 }
-
 
 class TBCalc {
 
@@ -495,7 +511,7 @@ class TBCalc {
                 } else if (parameterCnt > 1) {
                     data += " expects " + parameterCnt + " arguments";
                 }
-                data += ", type 'help(" + line.result.name + ")' for more";
+                data += ", type 'help(" + line.result.name + ")' or '" + line.result.name + "()' for more info";
             }
 
             if (line.selected) {

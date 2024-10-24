@@ -45,10 +45,22 @@ class Credit {
         if (extraPayment > principal) {
             throw Error("The extra payment can't be bigger than the principal");
         }
+        let result = {
+            principal,
+            extraPayment,
+            interest,
+            baseLoan: Credit.paymentCalc(principal, interest, terms)
+        }
+        if (extraPayment) {
+            result.newLoanKeepTerms = Credit.paymentCalc(principal - extraPayment, interest, terms);
+            result.newLoanKeepMonthly = Credit.termCalc(principal - extraPayment, result.baseLoan.termPaymentTotal, interest);
+        }
+        return result;
+    }
 
+    static prepareOutput(result) {
+        const { principal, interest, extraPayment, baseLoan, newLoanKeepTerms, newLoanKeepMonthly } = result;
         const indent = "    ";
-        let rendered = "\n";
-        const baseLoan = Credit.paymentCalc(principal, interest, terms);
 
         let data = [
             ["> Principal", Credit.formatNumber(principal)],
@@ -56,26 +68,25 @@ class Credit {
             ["> Remaining Terms", Credit.formatNumber(baseLoan.terms, 0)]
         ];
 
-        if (extraPayment) {
+        if (newLoanKeepTerms !== undefined) {
             data.push(["> Extra Payment", Credit.formatNumber(extraPayment)]);
         }
 
-        data.push(...[
+        data.push(
             [],
             ["Credit Simulation:"],
             [indent + "Term Interest Payment", Credit.formatNumber(baseLoan.termPaymentInterest)],
             [indent + "Term Capital Payment", Credit.formatNumber(baseLoan.termPaymentCapital)],
             [indent + "Term Total Payment", Credit.formatNumber(baseLoan.termPaymentTotal)],
             [indent + "Total", Credit.formatNumber(baseLoan.total)]
-        ]);
+        );
 
-        rendered += Credit.renderOutput(data, 28);
-
-        if (extraPayment) {
-            const newLoanKeepTerms = Credit.paymentCalc(principal - extraPayment, interest, terms);
-            const newLoanKeepMonthly = Credit.termCalc(principal - extraPayment, baseLoan.termPaymentTotal, interest);
-            const extraData = [
-                ["Extra Payment Simulation"],
+        let extraData = [];
+        if (newLoanKeepTerms !== undefined) {
+            extraData = [
+                [],
+                [],
+                ["Extra Payment Simulation:"],
                 [indent + "Strategy - Term Number:"],
                 [indent + indent + "Remaining Terms", Credit.formatNumber(newLoanKeepTerms.terms, 0)],
                 [indent + indent + "Term Interest Payment", Credit.formatNumber(newLoanKeepTerms.termPaymentInterest)],
@@ -89,31 +100,9 @@ class Credit {
                 [indent + indent + "Term Total Payment", Credit.formatNumber(newLoanKeepMonthly.termPaymentTotal)],
                 [indent + indent + "Total", Credit.formatNumber(newLoanKeepMonthly.total), Credit.formatNumber((newLoanKeepMonthly.total - baseLoan.total))],
             ];
-            rendered += "\n" + Credit.renderOutput(extraData, 33);
         }
-        rendered += "\n";
-        return rendered;
-    }
 
-    static renderOutput(lines, maxChars = 50) {
-        let output = "";
-        lines.forEach(function (line) {
-            if (line[0] !== undefined) {
-                if (line.length === 1 && line[0] === "\\-") {
-                    output += "-------------------------------------";
-                } else {
-                    output += line.length === 1 ? "<strong>" + line[0] + "</strong>" : line[0];
-                }
-            }
-            if (line[1] !== undefined) {
-                output += " ".repeat(maxChars - line[0].length) + line[1];
-            }
-            if (line[2] !== undefined) {
-                output += "\t " + line[2];
-            }
-            output += "\n";
-        });
-        return output;
+        return {data, extraData};
     }
 
 }
