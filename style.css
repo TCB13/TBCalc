@@ -43,7 +43,7 @@ body {
 	width: 100%;
 }
 
-p, a, a:link, a:hover, a:active, a:visited, a:focus, 
+p, a, a:link, a:hover, a:active, a:visited, a:focus,
 .actions button, .actions button:hover, .actions button:active, .actions button:focus {
     color: var(--app-text-color);
     outline: 0;

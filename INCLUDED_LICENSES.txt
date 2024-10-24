@@ -7,13 +7,11 @@
 /**
  * math.js
  * https://github.com/josdejong/mathjs
+ * Licensed under Apache License 2.0 (https://github.com/josdejong/mathjs/blob/develop/LICENSE)
  *
  * Math.js is an extensive math library for JavaScript and Node.js,
  * It features real and complex numbers, units, matrices, a large set of
  * mathematical functions, and a flexible expression parser.
- *
- * @version 5.9.0
- * @date    2019-05-08
  *
  * @license
  * Copyright (C) 2013-2019 Jos de Jong <wjosdejong@gmail.com>

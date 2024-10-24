@@ -1,6 +1,6 @@
 /**
- TBCalc v1.2 - Console Calculator
- Copyright (C) 2022 TCB13 (Tadeu Bento)
+ TBCalc v1.3 - Console Calculator
+ Copyright (C) 2022-2024 TCB13 (Tadeu Bento)
  https://tbcalc.tcb13.com | https://tcb13.com | https://tadeubento.com
 
  This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import {Credit} from "./functions/credit.js";
 
 let settings = {
     open_help: true,
@@ -28,7 +29,8 @@ math.import({
     tbcalc: "Welcome to TBCalc!",
     TBCalc: "Welcome to TBCalc!",
     clear: () => calc.reset(),
-    reset: () => calc.reset()
+    reset: () => calc.reset(),
+    credit: (...args) => Credit.simulate(...args)
 });
 
 window.onload = () => {
@@ -237,7 +239,7 @@ class TBCalc {
 
             this.lines.push(line);
 
-            if (line.code.substr(0, 2) === "  ") {
+            if (line.code.startsWith("  ")) {
                 line.indent = line.code.match(/\s+/)[0].match(/\s\s/g).length;
             }
 
@@ -275,7 +277,7 @@ class TBCalc {
                         line.parsed = math.parse(line.code);
                         line.compiled = cached.parsed.compile();
                     } else {
-                        line.result = line.compiled.eval(scope);
+                        line.result = line.compiled.evaluate(scope);
 
                     }
 
@@ -298,6 +300,7 @@ class TBCalc {
 
                 scope.last = line.result;
             }
+
         });
     }
 
@@ -383,14 +386,11 @@ class TBCalc {
             return;
         }
 
-        replacement = replacement.substr(0, replacement.length - 1);
-
-        let newSelectionStart = this.selectionStart + 2;
-        let newSelectionEnd = this.selectionEnd + affected * 2;
-
-        this.inputEl.setSelectionRange(selectionStart, selectionEnd);
-        this.replaceSelection(replacement);
-        this.inputEl.setSelectionRange(newSelectionStart, newSelectionEnd);
+        this.postIndent(
+            replacement, selectionStart, selectionEnd,
+            this.selectionStart + 2,
+            this.selectionEnd + affected * 2
+        );
     }
 
     removeIndent() {
@@ -404,12 +404,12 @@ class TBCalc {
             if (!line.selected) {
                 return false;
             }
-            if (line.code.substr(0, 2) !== "  ") {
+            if (!line.code.startsWith("  ")) {
                 return;
             }
 
             affected++;
-            replacement += line.code.substr(2) + "\n";
+            replacement += line.code.slice(2) + "\n";
 
             if (line.positionStart <= selectionStart) {
                 selectionStart = line.positionStart;
@@ -424,18 +424,22 @@ class TBCalc {
             return;
         }
 
-        replacement = replacement.substr(0, replacement.length - 1);
+        this.postIndent(
+            replacement, selectionStart, selectionEnd,
+            this.selectionStart - 2,
+            this.selectionEnd - affected * 2
+        );
+    }
 
-        const newSelectionStart = this.selectionStart - 2;
-        const newSelectionEnd = this.selectionEnd - affected * 2;
-
+    postIndent(replacement, selectionStart, selectionEnd, newSelectionStart, newSelectionEnd) {
+        replacement = replacement.slice(0, -1);
         this.inputEl.setSelectionRange(selectionStart, selectionEnd);
         this.replaceSelection(replacement);
         this.inputEl.setSelectionRange(newSelectionStart, newSelectionEnd);
     }
 
     repaint() {
-        var html = "";
+        let html = "";
         let compensatoryInputText = "";
 
         this.lines.forEach((line, index) => {
@@ -492,6 +496,7 @@ class TBCalc {
                 } else if (parameterCnt > 1) {
                     data += " expects " + parameterCnt + " arguments";
                 }
+                data += ", type 'help(" + line.result.name + ")' for more";
             }
 
             if (line.selected) {
@@ -504,12 +509,14 @@ class TBCalc {
                        .replace(/</g, "&lt;")
                        .replace(/>/g, "&gt;");
 
+            const outputLineCount = (data.match(/\n/g) || []).length;
+
             let lineHtml = "<div class=\"" + type + "\">";
             lineHtml += "<span class=\"code\" data-code=\"" + code + "\"></span>";
             lineHtml += "<span class=\"hint\" data-prefix=\"" + prefix + "\">" + data + "</span>";
             lineHtml += "</div>";
 
-            compensatoryInputText = "\n".repeat((data.match(/\n/g) || []).length);
+            compensatoryInputText = "\n".repeat(outputLineCount);
             html += lineHtml;
         });
 

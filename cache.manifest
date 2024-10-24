@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 0.0.2
+# Version 1.3.0
 
 NETWORK: *
 
@@ -16,5 +16,6 @@ popper.min.js
 style.css
 favicons/favicon.ico
 favicons/icon.svg
+functions/credit.js
 
 FALLBACK:
