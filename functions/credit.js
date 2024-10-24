@@ -1,4 +1,4 @@
-export class Credit {
+class Credit {
 
     static docs = {
         name: "credit",
