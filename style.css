@@ -17,11 +17,19 @@
     --border-color: #0E1621;
 }
 
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
     background-color: var(--app-background);
     color: var(--app-text-color);
     min-height: 100vh;
     display: flex;
+    margin: 0;
+    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 16px;
 }
 
 button {
@@ -244,12 +252,16 @@ dialog {
 }
 
 dialog.mobile-warning {
+    margin: auto 10px;
     >button.close {
         position: absolute;
         font-size: 1.5rem;
         right: 0;
     }
     .dialog-content > div {
+        p:first-of-type {
+            margin-top: 0;
+        }
         p:last-of-type {
             margin-bottom: 0;
         }
@@ -261,12 +273,13 @@ dialog.mobile-warning {
         }
         h1 {
             font-size: 20px;
+            margin-top: 0;
             margin-bottom: 5px;
             font-weight: bold;
         }
         h2 {
             font-size: 16px;
-            margin-bottom: 0;
+            margin: 0;
             font-weight: normal;
         }
     }
@@ -317,7 +330,9 @@ button.btn-primary {
             border-color: transparent black transparent transparent;
         }
     }
-    &:hover span.tooltip-text {
-        opacity: 1;
+    @media screen and (min-width: 760px) {
+        &:hover span.tooltip-text {
+            opacity: 1;
+        }
     }
 }
