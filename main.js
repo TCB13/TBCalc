@@ -93,6 +93,7 @@ window.onload = () => {
     document.getElementById("reset").onclick = () => calc.reset();
     document.getElementById("save-file").onclick = () => calc.download();
     document.getElementById("save-clipboard").onclick = () => calc.clipboard();
+    document.getElementById("print").onclick = () => window.print();
 
     if (stm.settings.open_help && window.innerWidth > 760) {
         const helpPanel = document.querySelector("div.offcanvas[data-offcanvas='help-panel']");
@@ -108,6 +109,16 @@ window.onload = () => {
             });
         }
     }
+
+    // Printing
+    window.addEventListener("beforeprint", (event) => {
+        const printOutput = document.querySelector(".print-area .output");
+        if (printOutput) {
+            printOutput.innerText = calc.collectOutput();
+            const date = new Date().toISOString().replace("T", " ").split(".")[0];
+            document.querySelector(".print-area p span.time").innerText = date;
+        }
+    });
 
 }
 

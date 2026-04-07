@@ -46,7 +46,7 @@
 </head>
 <body>
 
-<div class="side-menu actions">
+<div class="side-menu actions noprint">
     <div class="logo">
         <button type="button" id="refresh" style="font-size: 1.5rem;">
             <i class="bi bi-calculator-fill"></i>
@@ -63,6 +63,11 @@
         <button type="button" id="save-clipboard" class="tooltip">
             <i class="bi bi-clipboard2-plus"></i>
             <span class="tooltip-text">Copy to Clipboard</span>
+        </button>
+
+        <button type="button" id="print" class="tooltip">
+            <i class="bi bi-printer"></i>
+            <span class="tooltip-text">Print</span>
         </button>
 
         <button type="button" id="reset" class="tooltip">
@@ -83,13 +88,13 @@
     </div>
 </div>
 
-<div class="interface">
+<div class="interface noprint">
     <div class="output"></div>
     <textarea class="input" spellcheck="false"></textarea>
 </div>
 
 
-<div class="offcanvas help-panel" data-offcanvas="help-panel">
+<div class="offcanvas help-panel noprint" data-offcanvas="help-panel">
     <button type="button" class="btn close" data-offcanvas-target="help-panel">
         <i class="bi bi-x-lg"></i>
     </button>
@@ -164,7 +169,7 @@
     </div>
 </div>
 
-<div class="offcanvas settings-panel" data-offcanvas="settings-panel">
+<div class="offcanvas settings-panel noprint" data-offcanvas="settings-panel">
     <button type="button" class="btn close" data-offcanvas-target="settings-panel">
         <i class="bi bi-x-lg"></i>
     </button>
@@ -199,7 +204,7 @@
     </div>
 </div>
 
-<dialog class="mobile-warning">
+<dialog class="mobile-warning noprint">
     <button type="button" class="btn close">
         <i class="bi bi-x-lg"></i></button>
     <div class="dialog-content">
@@ -216,6 +221,15 @@
         </div>
     </div>
 </dialog>
+
+<div class="print-area noscreen">
+    <div class="header">
+        <h1><i class="bi bi-calculator-fill"></i> TBCalc</h1>
+        <p>Calculation Result Sheet</p>
+        <p>tbcalc.tcb13.com @ <span class="time"></span></p>
+    </div>
+    <p class="output"></p>
+</div>
 
 </body>
 </html>
