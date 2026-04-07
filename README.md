@@ -18,8 +18,8 @@ The best desktop console calculator yet!
 * Take advange of ES6 and browser's latest features as long as they work in Microsoft Edge WebView2.
 
 ## Dependencies
-TBCalc is developed to be a self-contained web application without external dependencies. It comes with `math.js`, `bootstrap`, `boostrap-icons` and `popper.js`. Clone this repository and you're good to go.
+TBCalc is developed to be a self-contained web application without external dependencies. It comes with `math.js` and `boostrap-icons`. Clone this repository and you're good to go.
 
 ________
 
-Copyright © TCB13 (Tadeu Bento) 2022-2024. Licensed under GPLv3.
+Copyright © TCB13 (Tadeu Bento) 2022-2026. Licensed under GPLv3.
