@@ -4,6 +4,9 @@
     --app-background: #fff;
     --app-text-color: #212529;;
     --border-color: #dee2e6;
+    --primary-color: #0d6efd;
+    --primary-color-hover: #0b5ed7;
+    --border-radius: 4px;
 }
 
 .dark-mode {
@@ -18,29 +21,50 @@ body {
     background-color: var(--app-background);
     color: var(--app-text-color);
     min-height: 100vh;
+    display: flex;
+}
+
+button {
+    font-weight: 400;
+    line-height: 1.5;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 0;
+    &:focus {
+        outline:0;
+    }
 }
 
 .side-menu {
+    display: flex;
+    flex-direction: column;
     background-color: var(--highlight-color);
-    border-color: var(--border-color) !important;
-    top: 0;
+    border-right: 1px solid var(--border-color);
     width: 3.5rem;
-    height: 100vh;
     user-select: none;
-    z-index: 1000;
+    .logo {
+        button {
+            border-bottom: 1px solid var(--border-color);
+        }
+    }
 }
 
 .actions-bottom {
-    bottom: 0;
-    position: absolute;
-    width: 100%;
+    margin-top: auto;
+    button {
+        border-top: 1px solid var(--border-color);
+    }
 }
 
 .actions button {
-	display: block;
-	border-radius: 0;
-	border: none;
 	width: 100%;
+    span.tooltip-text {
+        margin-left: 30px;
+        margin-top: -2px;
+    }
 }
 
 p, a, a:link, a:hover, a:active, a:visited, a:focus,
@@ -52,45 +76,89 @@ p, a, a:link, a:hover, a:active, a:visited, a:focus,
 }
 
 a, a:link, a:hover, a:active, a:visited, a:focus,
-.offcanvas-footer, .border-top, .border-bottom,
-.modal-header, .modal-footer  {
+.offcanvas-footer, .border-top, .border-bottom {
     border-color: var(--border-color) !important;
 }
 
 .brand-text {
-    transform: rotate(180deg);
-    writing-mode: vertical-rl;
+    display: block;
+    writing-mode: sideways-lr;
     text-orientation: mixed;
     font-size: 25px;
     margin: 0;
-    padding: 0 0.75rem 1rem 0;
+    padding-top: 1rem;
+    justify-self: center;
     line-height: 1;
 }
 
-.offcanvas, .modal-content {
+.offcanvas {
     background-color: var(--app-background);
 }
 
-.offcanvas span.hint {
-    color: var(--hint-color);
+.offcanvas {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    transition: right .5s ease;
+    width: 100%;
+    @media screen and (min-width: 380px) {
+        width: 380px;
+    }
+    height: 100vh;
+    border-left: 1px solid var(--border-color);
+    overflow: auto;
+    &.show {
+        right: 0;
+    }
+    .offcanvas-body {
+        padding: 1rem 1rem;
+    }
+    button.close {
+        float: right;
+        font-size: 24px;
+    }
+    h1 {
+        margin-top: 1.5rem;
+        margin-bottom: .8rem;
+        font-size: 1.7rem;
+        &:first-of-type {
+            margin-top: .2rem;
+        }
+    }
 }
 
-.offcanvas span.hint:before {
-    content: " = ";
-    color: var(--hint-color);
+.offcanvas.help-panel {
+    span.hint {
+        color: var(--hint-color);
+    }
+    span.hint:before {
+        content: " = ";
+        color: var(--hint-color);
+    }
 }
 
-.offcanvas h1 {
-    margin-top: 1.5rem;
+.offcanvas.settings-panel {
+    form {
+        .form-check {
+            margin: 2px 0;
+        }
+    }
+    .legal {
+        border-top: 1px solid var(--border-color);
+        margin-top: 15px;
+        padding-top: 10px;
+        font-size: 0.8rem;
+        span {
+            font-weight: bold;
+        }
+    }
+
 }
 
 .interface {
-    position:relative;
-    height: 100vh;
-    top: 0;
-    bottom: 0;
-    width: auto;
-    margin-left: 3.5rem;
+    flex: 1;
+    position: relative;
+    overflow: auto;
 }
 
 .interface .input, .interface .output, .help-panel .input, .help-panel .output {
@@ -163,10 +231,93 @@ a, a:link, a:hover, a:active, a:visited, a:focus,
     color: red;
 }
 
-.legal {
-    font-size: 0.8rem;
+dialog {
+    width: auto;
+    max-width: 500px;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    background-color: var(--app-background);
+    border-radius: var(--border-radius);
+    &::backdrop {
+        background-color: rgba(0,0,0,0.5);
+    }
 }
 
-.legal span {
-    font-weight: bold;
+dialog.mobile-warning {
+    >button.close {
+        position: absolute;
+        font-size: 1.5rem;
+        right: 0;
+    }
+    .dialog-content > div {
+        p:last-of-type {
+            margin-bottom: 0;
+        }
+        padding: 15px;
+    }
+    .dialog-header {
+        i {
+            margin-right: 5px;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 16px;
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+    }
+    .dialog-body {
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+button.btn-primary {
+    width: 100%;
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    margin: 4px;
+    padding: 6px;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    &:hover, &:active, &:focus {
+        background-color: var(--primary-color-hover);
+        border-color: var(--primary-color-hover);
+    }
+}
+
+.tooltip {
+    cursor: pointer;
+    span.tooltip-text {
+        width: auto;
+        white-space: nowrap;
+        background-color: black;
+        color: #ffffff;
+        line-height: 1;
+        font-size: 14px;
+        padding: 8px 10px;
+        border-radius: var(--border-radius);
+        position: absolute;
+        z-index: 100;
+        opacity: 0;
+        transition: opacity .3s;
+        &::after {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent black transparent transparent;
+        }
+    }
+    &:hover span.tooltip-text {
+        opacity: 1;
+    }
 }

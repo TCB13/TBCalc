@@ -9,9 +9,10 @@
     <link rel="shortcut icon" href="favicons/favicon.ico">
     <link rel="icon" href="favicons/icon.svg" type="image/svg+xml">
     <link rel="manifest" href="manifest.webmanifest">
+    <meta name="color-scheme" content="light" />
 
     <!-- Apple Style PWAs (: -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TBCalc">
     <!--
@@ -36,11 +37,9 @@
         <meta name="msapplication-config" content="browserconfig.xml">
     -->
 
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-reboot.min.css">
     <link rel="stylesheet" href="bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="popper.min.js"></script>
-    <script src="bootstrap.min.js"></script>
     <script src="math.min.js"></script>
     <script src="functions/render-helpers.js"></script>
     <script src="functions/credit.js"></script>
@@ -49,73 +48,55 @@
 </head>
 <body>
 
-<div class="side-menu border-top border-end position-fixed actions">
+<div class="side-menu actions">
     <div class="logo">
-        <button type="button" class="btn p-3 text-decoration-none border-bottom"
-                id="refresh" style="font-size: 1.5rem;"
-        >
+        <button type="button" id="refresh" style="font-size: 1.5rem;">
             <i class="bi bi-calculator-fill"></i>
         </button>
-        <p class="d-block brand-text">TBCalc</p>
+        <p class="brand-text">TBCalc</p>
     </div>
 
-    <div class="actions-bottom text-center">
-        <button type="button" class="btn py-3 border-top"
-                id="save-file"
-                aria-current="page" title="Save to File"
-                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Save to File"
-        >
+    <div class="actions-bottom">
+        <button type="button" id="save-file" class="tooltip">
             <i class="bi bi-box-arrow-up"></i>
+            <span class="tooltip-text">Save to File</span>
         </button>
 
-        <button type="button" class="btn py-3 border-top"
-                id="save-clipboard"
-                aria-current="page" title="Copy to Clipboard"
-                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Copy to Clipboard"
-        >
+        <button type="button" id="save-clipboard" class="tooltip">
             <i class="bi bi-clipboard2-plus"></i>
+            <span class="tooltip-text">Copy to Clipboard</span>
         </button>
 
-        <button type="button" class="btn py-3 border-top"
-                id="reset"
-                aria-current="page" title="Clear"
-                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Clear"
-        >
+        <button type="button" id="reset" class="tooltip">
             <i class="bi bi-trash3"></i>
+            <span class="tooltip-text">Clear</span>
         </button>
 
-        <button type="button" class="btn py-3 border-top"
-                aria-current="page" title="Help"
-                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Help"
-                data-bs-toggle="offcanvas" data-bs-target=".help-panel" aria-controls="help-panel"
-        >
+        <button type="button" class="tooltip" data-offcanvas-target="help-panel">
             <i class="bi bi-question-lg"></i>
+            <span class="tooltip-text">Help</span>
         </button>
 
-        <button type="button" class="btn py-3 border-top"
-                aria-current="page" title="Settings"
-                data-bs-toggle-tooltip="tooltip" data-bs-placement="right" data-bs-original-title="Settings"
-                data-bs-toggle="offcanvas" data-bs-target=".settings-panel" aria-controls="settings-panel"
-        >
+        <button type="button" class="tooltip" data-offcanvas-target="settings-panel">
             <i class="bi bi-gear"></i>
+            <span class="tooltip-text">Settings</span>
         </button>
 
     </div>
 </div>
 
-<div class="interface border-top">
+<div class="interface">
     <div class="output"></div>
     <textarea class="input" spellcheck="false"></textarea>
 </div>
 
 
-<div class="offcanvas offcanvas-end help-panel border-top" data-bs-scroll="true" data-bs-backdrop="false"
-     tabindex="-1" aria-labelledby="help-panel">
+<div class="offcanvas help-panel" data-offcanvas="help-panel">
+    <button type="button" class="btn close" data-offcanvas-target="help-panel">
+        <i class="bi bi-x-lg"></i>
+    </button>
     <div class="offcanvas-body">
-        <button type="button" class="btn text-reset float-end"
-                data-bs-dismiss="offcanvas" aria-label="Close" style="font-size: 1.5rem;">
-            <i class="bi bi-x-lg"></i>
-        </button>
+
         <h1>Basic Math</h1>
         <p class="input">
             2 + 2 * 2<span class="hint">6</span><br>
@@ -185,15 +166,13 @@
     </div>
 </div>
 
-<div class="offcanvas offcanvas-end settings-panel border-top" data-bs-scroll="true" data-bs-backdrop="false"
-     tabindex="-1" aria-labelledby="settings-panel">
+<div class="offcanvas settings-panel" data-offcanvas="settings-panel">
+    <button type="button" class="btn close" data-offcanvas-target="settings-panel">
+        <i class="bi bi-x-lg"></i>
+    </button>
     <div class="offcanvas-body">
-        <button type="button" class="btn text-reset float-end"
-                data-bs-dismiss="offcanvas" aria-label="Close" style="font-size: 1.5rem;">
-            <i class="bi bi-x-lg"></i>
-        </button>
         <h1>Settings</h1>
-        <form class="mt-4 settings">
+        <form class="settings">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="darkmode">
                 <label class="form-check-label" for="darkmode">Enable dark mode</label>
@@ -211,10 +190,10 @@
                 <label class="form-check-label" for="round_results">Round results to 10 decimal places</label>
             </div>
         </form>
-        <div class="border-top my-4 pt-2 legal">
+        <div class="legal">
             <p>
-                <span>TBCalc v1.4 - www.tcb13.com</span><br>
-                Copyright © TCB13 (Tadeu Bento) 2022-2024.<br>
+                <span>TBCalc v1.5 - www.tcb13.com</span><br>
+                Copyright © TCB13 (Tadeu Bento) 2022-2026.<br>
                 <a rel="license" target="_blank" href="https://tbcalc.tcb13.com/LICENSE.txt">Licensed under GPLv3.</a><br>
                 <a target="_blank" href="https://tbcalc.tcb13.com/INCLUDED_LICENSES.txt">This project uses open-source libraries.</a>
             </p>
@@ -222,29 +201,23 @@
     </div>
 </div>
 
-<div class="modal fade mobile-warning" data-bs-backdrop="static" tabindex="-1"
-     aria-labelledby="mobile-waring-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold lh-sm" id="mobile-waring-label"><i class="bi bi-calculator-fill"></i>
-                    Welcome to TBCalc<br><span class="fs-6 fw-normal">The best desktop console calculator yet!</span>
-                </h5>
-                <button type="button" class="btn text-reset float-end"
-                        data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem;">
-                    <i class="bi bi-x-lg"></i></button>
-            </div>
-            <div class="modal-body">
-                <p>TBCalc brings the power and usability of a console to everyday math.</p>
-                <p>If you're on a mobile device without a keyboard your experience might be poor. Continue at your own
-                    risk.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">I Understand</button>
-            </div>
+<dialog class="mobile-warning">
+    <button type="button" class="btn close">
+        <i class="bi bi-x-lg"></i></button>
+    <div class="dialog-content">
+        <div class="dialog-header">
+            <h1 class="dialog-title" id="mobile-waring-label"><i class="bi bi-calculator-fill"></i>Welcome to TBCalc</h1>
+            <h2>The best desktop console calculator yet!</h2>
+        </div>
+        <div class="dialog-body">
+            <p>TBCalc brings the power and usability of a console to everyday math.</p>
+            <p>If you're on a mobile device without a keyboard your experience might be poor. Continue at your own risk.</p>
+        </div>
+        <div class="dialog-footer">
+            <button type="button" class="btn-primary close" data-bs-dismiss="modal">I Understand</button>
         </div>
     </div>
-</div>
+</dialog>
 
 </body>
 </html>

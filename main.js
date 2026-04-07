@@ -1,6 +1,6 @@
 /*
- * TBCalc v1.4 - Console Calculator
- * Copyright (C) 2022-2024 TCB13 (Tadeu Bento)
+ * TBCalc v1.5 - Console Calculator
+ * Copyright (C) 2022-2026 TCB13 (Tadeu Bento)
  * https://tbcalc.tcb13.com | https://tcb13.com | https://tadeubento.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@ let settings = {
 }
 
 math.import({
-    tbcalc: "Welcome to TBCalc!",
-    TBCalc: "Welcome to TBCalc!",
+    tbcalc: "Welcome to TBCalc! - v1.5",
+    TBCalc: "Welcome to TBCalc! - v1.5",
     clear: () => calc.reset(),
     reset: () => calc.reset(),
     credit: (...args) => {
@@ -55,42 +55,58 @@ window.onload = () => {
     window.stm = new SettingsManager(settingCheckboxes, settings);
     stm.load();
 
-    document.querySelector("form.settings input#darkmode").addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-    });
+    const toggleDarkMode = function() {
+        const isDark = document.body.classList.toggle("dark-mode");
+        document.querySelector('meta[name="color-scheme"]')
+            .setAttribute("content", isDark ? "dark" : "light");
+    }
+    if (stm.settings.darkmode) {
+        toggleDarkMode();
+    }
+    document.querySelector("form.settings input#darkmode").addEventListener("click", toggleDarkMode);
 
     const input = document.querySelector(".interface .input");
     if (stm.settings.save_history && localStorage.getItem("input")) {
         input.value = localStorage.getItem("input");
     }
-
     const output = document.querySelector(".interface .output");
     window.calc = new TBCalc(input, output);
     calc.inputEl.focus();
 
-    if (stm.settings.darkmode) {
-        document.body.classList.add("dark-mode");
-    }
+    // Offcanvas
+    const offcanvasTriggers = document.querySelectorAll("[data-offcanvas-target]");
+    offcanvasTriggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            const target = trigger.getAttribute("data-offcanvas-target");
+            const offcanvasOpen = document.querySelector("div.offcanvas.show");
+            if (offcanvasOpen && offcanvasOpen.getAttribute("data-offcanvas") !== target) {
+                offcanvasOpen.classList.remove("show"); // Close open instances
+            }
+            const offcanvasTarget = document.querySelector("div.offcanvas[data-offcanvas='" + target +"']");
+            if (offcanvasTarget) {
+                offcanvasTarget.classList.toggle("show");
+            }
+        });
+    });
 
     document.getElementById("refresh").onclick = () => location.reload();
     document.getElementById("reset").onclick = () => calc.reset();
     document.getElementById("save-file").onclick = () => calc.download();
     document.getElementById("save-clipboard").onclick = () => calc.clipboard();
+
     if (stm.settings.open_help && window.innerWidth > 760) {
-        let helpPanel = new bootstrap.Offcanvas(document.querySelector(".offcanvas.help-panel"))
-        helpPanel.show();
+        const helpPanel = document.querySelector("div.offcanvas[data-offcanvas='help-panel']");
+        helpPanel.classList.add("show");
     }
 
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll("[data-bs-toggle-tooltip=\"tooltip\"]"))
-    tooltipTriggerList.map(tooltipTriggerEl => {
-        return new bootstrap.Tooltip(tooltipTriggerEl, {
-            trigger: "hover"
-        })
-    });
-
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        const mobileModal = new bootstrap.Modal(document.querySelector(".modal.mobile-warning"));
-        mobileModal.show();
+        const mobileDialog = document.querySelector("dialog.mobile-warning");
+        if (mobileDialog) {
+            mobileDialog.showModal();
+            mobileDialog.querySelectorAll("button.close").forEach(btn => {
+                btn.onclick = () => mobileDialog.close();
+            });
+        }
     }
 
 }

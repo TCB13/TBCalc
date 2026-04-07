@@ -1,18 +1,15 @@
 CACHE MANIFEST
 
-# Version 1.4.0
+# Version 1.5.0
 
 NETWORK: *
 
 CACHE:
 fonts/bootstrap-icons.woff
 fonts/bootstrap-icons.woff2
-bootstrap.min.css
-bootstrap.min.js
 bootstrap-icons.min.css
 main.js
 math.min.js
-popper.min.js
 style.css
 favicons/favicon.ico
 favicons/icon.svg
